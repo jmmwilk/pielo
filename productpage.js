@@ -2,6 +2,7 @@ import * as diaperslist from './diapers.js';
 import * as productslist from './productslist.js';
 
 export function createProductScreen (card) {
+	// Q: Czemu potrzebujesz ręcznie tworzyć jakiegoś diva w javascript'cie, skoro mamy template'y?
 	let productPage = document.createElement('div');
 	productPage.id = 'product-page';
 	productPage.className = 'col-md-10 d-flex flex-column order-1';

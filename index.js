@@ -1,5 +1,6 @@
 import * as menu from './menu.js';
 import * as diaperslist  from './diapers.js';
+// Q: Czemu diaberslist jest importowana tutaj oraz w productlist.js ?
 import * as nameslist  from './diaperstype.js';
 import * as productslist from './productslist.js';
 import * as sidebarmenu from './sidebarmenu.js';

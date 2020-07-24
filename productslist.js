@@ -1,9 +1,13 @@
 import * as diaperslist from './diapers.js';
 import * as productpage from './productpage.js';
 
+
+// S: Powinnaś unikać używania zmiennych globalnych.
+// Ta jest użyta wewnątrz dwóch powiązanych ze sobą funkcji. Nie ma potrzeby trzymać tego globalnie.
 let clickedMenuItem;
 
 function createProductsContainer () {
+	// Q: Czemu potrzebujesz ręcznie tworzyć jakiegoś diva w javascript'cie, skoro mamy template'y?
 	let productsContainer = document.createElement('div');
 	productsContainer.id = 'products-container';
 	productsContainer.className = 'd-flex flex-row row row-cols-1 row-cols-md-2 row-cols-lg-3 w-100';
@@ -30,9 +34,11 @@ export function removeProductsList () {
 }
 
 function fillDiaperCards () {
+	// Q: po co tworzysz zmienną pieluchaTemplate, skoro nie jest nigdy użyta w tej funkcji?
 	let pieluchaTemplate = $('#pielucha-template').html();
+
 	Handlebars.registerHelper('printdiaper', function(){
-		return this.name + ' ' + this.type + ' ' + this.fabricprint
+		return this.name + ' ' + this.type + ' ' + this.fabricprint;
 	})
 }
 
@@ -97,6 +103,8 @@ function removeProductsContainer () {
 }
 
 function findCategory () {
+	// S: To się wydaje bardzo skomplikowane.
+	//  Przechowaj po prostu kategorię atrybucie 'data' i wyciągnij tutaj.
 	let category;
 	let isItType = clickedMenuItem.classList.contains('type');
 	let isItFabric = clickedMenuItem.classList.contains('fabric');
