@@ -1,4 +1,4 @@
-import * as menu from './menu.js';
+import * as menu from '../mocks/menu.js';
 
 export function createForm () {
 	let formScreen = document.createElement('div');
@@ -9,6 +9,7 @@ export function createForm () {
 	createFormTemplate ();
 	createInputsContainersTemplate ();
 	createFormInputTemplate ();
+	printValue ();
 }
 
 let formInputs = {
@@ -59,3 +60,20 @@ function createFormTemplate () {
 	let compiledForm = Handlebars.compile(form);
 	$('#form-screen').html(compiledForm(formInputs));
 }
+
+function printValue () {
+	let button = document.getElementById('form-add');
+
+	button.onclick = function () {
+		let valueName = document.getElementById('input-name').value;
+		let valueSize = document.getElementById('input-size').value;
+		let valueFabric = document.getElementById('input-fabric').value;
+		let valueBrand = document.getElementById('input-brand').value;
+		console.log (valueName, valueSize, valueFabric, valueBrand)
+	}
+}
+
+
+
+
+

@@ -1,10 +1,9 @@
-import * as menu from './menu.js';
-import * as diaperslist  from './diapers.js';
-// Q: Czemu diaberslist jest importowana tutaj oraz w productlist.js ?
-import * as nameslist  from './diaperstype.js';
-import * as productslist from './productslist.js';
-import * as sidebarmenu from './sidebarmenu.js';
-import * as form from './form.js';
+import * as menu from '../mocks/menu.js';
+// Q: Czemu diaberslist jest importowana tutaj ?
+import * as diaperslist  from '../mocks/diapers.js';
+import * as productslist from '../views/productslist.js';
+import * as sidebarmenu from '../views/sidebarmenu.js';
+import * as form from '../views/form.js';
 
 $(document).ready(function(){
 	sidebarmenu.createSideBar ();

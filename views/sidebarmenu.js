@@ -1,5 +1,5 @@
-import * as menu from './menu.js';
-import * as productslist from './productslist.js';
+import * as menu from '../mocks/menu.js';
+import * as productslist from '../views/productslist.js';
 
 export function removeSidebarMenu () {
 	let sideBarMenu = document.getElementById('side-bar');

@@ -1,5 +1,5 @@
-import * as diaperslist from './diapers.js';
-import * as productslist from './productslist.js';
+import * as diaperslist from '../mocks/diapers.js';
+import * as productslist from '../views/productslist.js';
 
 export function createProductScreen (card) {
 	// Q: Czemu potrzebujesz ręcznie tworzyć jakiegoś diva w javascript'cie, skoro mamy template'y?

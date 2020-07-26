@@ -1,5 +1,5 @@
-import * as diaperslist from './diapers.js';
-import * as productpage from './productpage.js';
+import * as diaperslist from '../mocks/diapers.js';
+import * as productpage from '../views/productpage.js';
 
 
 // S: Powinnaś unikać używania zmiennych globalnych.
