@@ -17,9 +17,7 @@ function enableNavClick () {
 	Array.from(menuItems).forEach(function(menuItem) {
 		menuItem.onclick = function() {
 			let navCategoryGroup = menuItem.dataset.categorygroup;
-			console.log ('navCategoryGroup', navCategoryGroup)
 			let navCategory = menuItem.dataset.category;
-			console.log ('navCategory', navCategory)
 			productslist.createNewProductsList (navCategoryGroup, navCategory);
 
 //			let newItems = {'diapers': []} ;
@@ -37,11 +35,6 @@ function enableNavClick () {
 			// enableCardClick ();
 		}
 	})
-}
-
-function createSelectedItemsList () {
-
-	return diapers
 }
 
 function printDiapers () {
@@ -74,9 +67,6 @@ export function removeSidebarMenu () {
 }
 
 function createSideBarTemplate (data) {
-
-//	console.log('data', data)
-//	let categories = menu.sideBarMenu;
 	let sideBarTemplate = $('#sidebar-template').html();
 	let compiledSideBarTemplate = Handlebars.compile(sideBarTemplate)
 	$('#page').append(compiledSideBarTemplate(data))

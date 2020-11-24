@@ -41,44 +41,16 @@ function createLoginPage () {
 	$('#page').html(loginTemplate);
 }
 
-function enablelogIn (categoriesData) {
-	const btnLogIn = document.getElementById('log-in');
-	btnLogIn.addEventListener ('click', e => {
-		const email = document.getElementById('email').value;
-		const password = document.getElementById('password').value;
-		const auth = firebase.auth();
-		const promise = auth.signInWithEmailAndPassword(email, password);
-
-		promise.then(function() {
-		    firebase.auth().onAuthStateChanged(firebaseUser => {
-				if (firebaseUser) {
-					const promise2 = findUserInDatabase (firebaseUser);
-					promise2.then(function(user) {
-						let role = user.role;
-						const promise3 = new Promise ((resolve, reject) => {
-							changeState (role)
-							resolve()
-						});
-						promise3.then (function () {
-							eventBus.eventBus.trigger('userLoggedIn');
-						})
-					})
-				} else {
-				}
-			})
-		})
-
-		goToStartPage (categoriesData);
-	})
-}
-
 function findUserInDatabase (firebaseUser) {
 	const promise = new Promise ((resolve, reject) => {
 		const promise2 = getAllUsersFromDatabase ();
-		promise2.then(function(data) {
-			for (let i=0; i<data.length; i++) {
-				if (firebaseUser.uid == data[i].user.uid) {
-					resolve (data[i].user)
+		promise2.then(function(usersData) {
+			for (let i=0; i<usersData.length; i++) {
+				let user = usersData[i].data[0].user
+				if (firebaseUser.uid == user.uid) {
+					let key = usersData[i].key;
+					user.key = key;
+					resolve (user)
 				}
 			}
 		})
@@ -89,13 +61,17 @@ function findUserInDatabase (firebaseUser) {
 function getAllUsersFromDatabase () {
 	const promise1 = new Promise ((resolve, reject) => {
 		let dbRef = firebase.database().ref('users/');
-		let data = [];
+		let usersData = [];
 		dbRef.once('value',   function(snapshot) {
 		    snapshot.forEach(function(childSnapshot) {
-		      var childData = childSnapshot.val();
-		      data.push(childData);
+		    	let data = [];
+			    var key = childSnapshot.key;
+			    var childData = childSnapshot.val();
+			    data.push(childData);
+			    let userData = {'data': data, 'key': key};
+			   	usersData.push(userData);
 		    });
-		    resolve (data)
+		    resolve (usersData)
 	  	});
 	  	
 	});
@@ -107,8 +83,33 @@ function goToStartPage (categoriesData) {
 	index.createStartPage (categoriesData);
 }
 
+function enablelogIn (categoriesData) {
+	const btnLogIn = document.getElementById('log-in');
+	btnLogIn.addEventListener ('click', e => {
+		const email = document.getElementById('email').value;
+		const password = document.getElementById('password').value;
+		const auth = firebase.auth();
+		const promise = auth.signInWithEmailAndPassword(email, password);
+		promise.then(function() {
+		    firebase.auth().onAuthStateChanged(firebaseUser => {
+				if (firebaseUser) {
+					const promise2 = findUserInDatabase (firebaseUser);
+					promise2.then(function(user) {
+						changeStateLogIn (user, firebaseUser)
+					})
+					.then (function () {
+						eventBus.eventBus.trigger('userLoggedIn');
+						goToStartPage (categoriesData);
+					})
+				} else {
+				}
+			})
+		})
+	})
+}
+
 function enableSignUp (categoriesData) {
-	eventBus.eventBus.subscribe('userLoggedIn', createUserInFirestore);
+//	eventBus.eventBus.subscribe('userLoggedIn', createUserInFirestore);
 	const btnSignUp = document.getElementById('sign-up');
 	btnSignUp.addEventListener ('click', e => {
 		const email = document.getElementById('email').value;
@@ -125,42 +126,60 @@ function enableSignUp (categoriesData) {
 		promise.then(function() {
 		    firebase.auth().onAuthStateChanged(firebaseUser => {
 				if (firebaseUser) {
-					const promise = new Promise ((resolve, reject) => {
-						changeState (role)
-						resolve()
-					});
-					promise.then (function () {
-						eventBus.eventBus.trigger('userLoggedIn');
+					const promise2 = changeStateSignUp (firebaseUser, role)
+					promise2.then (function () {
+						const promise3 = createUserInFirestore ();
+						promise3.then (function(key) {
+							state.state.userKey = key;
+						})
+						.then (function() {
+							eventBus.eventBus.trigger('userLoggedIn');
+							goToStartPage (categoriesData);
+						})
 					})
 				} else {
 				}
 			})
 		})
-		goToStartPage (categoriesData);
 	})
 }
 
-function changeState (role) {
-	firebase.auth().onAuthStateChanged(firebaseUser => {
-		if (firebaseUser) {
-			state.state.user = firebaseUser;
-			state.state.userRole = role;
-		}
+function changeStateLogIn (user, firebaseUser) {
+	const promise = new Promise ((resolve, reject) => {
+		let role = user.role;
+		let key = user.key
+		state.state.user = firebaseUser;
+		state.state.userRole = role;
+		state.state.userKey = key;
+		resolve()
 	})
+	return promise
+}
+
+function changeStateSignUp (firebaseUser, role) {
+	const promise = new Promise ((resolve, reject) => {
+		state.state.user = firebaseUser;
+		state.state.userRole = role;
+		resolve()
+	})
+	return promise
 }
 
 function createUserInFirestore () {
-	let user = {};
-	user.uid = state.state.user.uid;
-	user.email = state.state.user.email;
-	user.role = state.state.userRole
-	let dbRef = firebase.database().ref('users/');
-	var newDbRef = dbRef.push();
-	newDbRef.set({
-	  user
-	});
-	// let key = newDbRef.getKey();
-	// return key
+	const promise = new Promise ((resolve, reject) => {
+		let user = {};
+		user.uid = state.state.user.uid;
+		user.email = state.state.user.email;
+		user.role = state.state.userRole;
+		let dbRef = firebase.database().ref('users/');
+		var newDbRef = dbRef.push();
+		newDbRef.set({
+		  user
+		});
+		let key = newDbRef.getKey();
+		resolve(key)
+	})
+	return promise
 }
 
 function checkForAuthStateChange () {

@@ -7,12 +7,10 @@ import * as state from '../state.js';
 let database = firebase.database();
 
 export function createProductScreen (key, view) {
-	console.log('zupa')
 	const promise = loadItemData (key);
 	promise
 	.then (function (diaper) {
 		createPreviewScreen (diaper, view);
-		console.log('state.state', state.state)
 	})
 }
 
@@ -63,22 +61,6 @@ function createReviewsTemplate (selectedReviews) {
 	$('#reviews-container').html(compiledReviewTemplate(selectedReviews))
 }
 
-// function enableSizeButton () {
-// 	let nbText = 'New Born 3-5 kg';
-// 	let mosText = 'Mini One Size 4-9 kg';
-// 	let osText = 'One Size 6-12 kg';
-
-// 	let nb = document.getElementById('nb');
-// 	let mos = document.getElementById('mos');
-// 	let os = document.getElementById('os');
-
-// 	let text = document.getElementById('size-description');
-
-// 	nb.onclick = function(){text.innerText = nbText};
-// 	mos.onclick = function(){text.innerText = mosText};
-// 	os.onclick = function(){text.innerText = osText};
-// }
-
 function createSizeButtons (diaper) {
 	createSizeButtonsTemplate (diaper);
 	let buttons = document.getElementsByClassName('size-button');
@@ -128,6 +110,10 @@ export function createPreviewScreen (diaper, view) {
 	if (view == 'productScreen') {
 		createStarsBoxTemplate ();
 		createReviewsBoxTemplate ();
+		createAddReviewTemplate (diaper);
+		createDetailReviewsSummaryTemplate ();
+		createChildFormTemplate ();
+//		stopProp ();
 	}
 	fillMockDiaperPreview (diaper);
 	setClassesToParameters ();
@@ -233,7 +219,32 @@ function createStarsBoxTemplate () {
 	$('#stars-box-wrapper').html(compiledStarsBoxTemplate());
 }
 
+function createDetailReviewsSummaryTemplate () {
+	let template = $('#detail-reviews-summary-template').html();
+	let compiletedTemplate = Handlebars.compile(template);
+	$('#detail-summary-wrapper').append(compiletedTemplate());
+}
+
+function createAddReviewTemplate (diaper) {
+	let template = $('#add-review-template').html();
+	let compiledTemplate = Handlebars.compile(template);
+	$('#add-review-form-wrapper').html(compiledTemplate(diaper));
+}
+
+function createChildFormTemplate() {
+	let template = $('#add-review-child-template').html();
+	let compiledTemplate = Handlebars.compile(template);
+	$('#ar-child-wrapper').html(compiledTemplate());
+}
+
+function stopProp () {
+	$('#ar-child-title').click(function( event ) {
+	  	event.stopPropagation();
+	});
+}
 
 
 
-
+// aria-expanded="false" aria-controls="ar-child-wrapper" data-toggle="collapse" href="#ar-child-wrapper"
+//streched-link
+//button

@@ -1,12 +1,55 @@
 import * as menu from '../mocks/menu.js';
 import * as productslist from '../views/productslist.js';
 import * as sidebarmenu from '../views/sidebarmenu.js';
-import * as form from '../views/form.js';
+import * as form from '../views/new-form.js';
 import * as login from '../views/login.js';
 import * as eventBus from '../eventBus.js';
 import * as state from '../state.js';
+import * as newsletterPage from '../views/newsletter-page.js';
 
 $(document).ready(function(){
+	// let dbRef = firebase.database().ref('form-categories/');
+	// let newDbRef = dbRef.push();
+	// newDbRef.set({
+	//   'id': 'flaps-fabrics',
+	//   'input-type': 'select',
+	//   'name': 'Zakładki- materały',
+	//   'question-type': 'dependent',
+	//   'view': 'fabrics',
+	// });
+
+	// let dbRef = firebase.database().ref('form-questions-text/');
+	// let newDbRef = dbRef.push();
+	// newDbRef.set({
+	//   'question-id': 'flaps-fabrisc',
+	//   'for-multiple-questions': false,
+	//   'options': [
+	//   		{	
+	//   		'name': 'all-fabrics',
+	//   		'text': 'Zakładki- materiały'
+	//   		},
+	//   	]
+	// });
+	
+	// let dbRef = firebase.database().ref('form-answers/');
+	// let newDbRef = dbRef.push();
+	// newDbRef.set({
+	//   'id': 'fabrics-all',
+	//   'for-multiple-questions': false,
+	//   'options': [
+	//   		{	
+	//   		'name': 'bawełna',
+	//   		},
+	//   		{	
+	//   		'name': 'bambus',
+	//   		},
+	//   		{	
+	//   		'name': 'leonardo',
+	//   		},
+	//   	]
+	// });
+
+	createTemplate ('application-template', 'application');
 	const promise = getCategories ();
 	promise.
 	then(function(data) {
@@ -21,6 +64,18 @@ $(document).ready(function(){
 		});
 	});
 })
+
+export function createTemplate (templateId, parentTemplate) {
+	let template = $('#' + templateId).html();
+	let compiledTemplate = Handlebars.compile(template);
+	$('#' + parentTemplate).html(compiledTemplate());
+}
+
+// function createApplicationTemplate () {
+// 	let template = $('#application-template').html();
+// 	let compiledTemplate = Handlebars.compile(template);
+// 	$('#application').html(compiledTemplate());
+// }
 
 function fillUserName () {
 	let userNameBox = document.getElementById('user-name-box');

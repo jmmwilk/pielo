@@ -5,7 +5,26 @@ body {
   background-color: white;
 }
 
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1.6rem;
+  }
+}
+
 #application {
+	height: 100vh;
 }
 
 #title-bar {
@@ -78,6 +97,30 @@ body {
 	width: 30px;
 }
 
+#heart-icon {
+	height: 30px;
+	width: 30px;
+}
 
+.bar {
+	border: solid black 1px;
+	height: 20px;
+	width: 100%;
+}
 
+#star-review {
+	height: 40px;
+ 	width: 40px;
+}
+
+input:error {
+  border-color: red
+}
+
+/*
+input:is-invalid {
+  ~ .invalid-feedback {
+    display: block;
+  }
+}*/
 
