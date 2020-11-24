@@ -87,7 +87,8 @@ export function createStartPage (categoriesData) {
 	productslist.createProductsList ();
 }
 
-function enableButton (categoriesData) {
+function enableButton (categoriesData) {  // TODO: what button?
+	// TODO: a button that only switches the current view should not handle data
 	let button = document.getElementById('add-diaper');
 	button.onclick = function() {
 		clearPage ();
