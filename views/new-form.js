@@ -3,12 +3,12 @@ import * as state from '../state.js';
 let database = firebase.database();
 let storage = firebase.storage();
 let viewNumber = 0;
-let view;
+let view;			// TODO: same name as view js files
 
-export function createForm (data) {
-	const promise = getFormCategories ();
-	promise.then(function(){
-		getQuestionsText ();
+export function createForm (data) {  // TODO: what data?
+	getFormCategories()
+	.then(function(){
+		getQuestionsText (); // TODO: this returns a promise that is never used
 	})
 	.then(function(){
 		getAnswersOptions ();
@@ -16,7 +16,7 @@ export function createForm (data) {
 	.then(function(){
 		createTemplate ('form-page-template', 'page')
 		createDiaperCategoriesPage (data)
-		document.getElementById('diaper-category-button').onclick = function () {
+		document.getElementById('diaper-category-button').onclick = function () { // TODO: what button?
 			let views = getViews ()
 			view = views[viewNumber];
 			saveDiaperCategoryData (data);
@@ -24,7 +24,7 @@ export function createForm (data) {
 			createFormNavigation ();
 			createFormPage ();
 			activateNavItem ();
-			document.getElementById('form-button').onclick = function() {
+			document.getElementById('form-button').onclick = function() {  // TODO: what button?
 				saveAnswers ();
 				viewNumber = viewNumber + 1
 				view = views[viewNumber];
@@ -49,9 +49,15 @@ function createFormPage () {
 function createFormQuestions () {
 	let diaper = state.item.categoryData
 	let questions = state.formCategories.categories;
+
+	// TODO: maybe use Array.prototype.filter() ?
+	// const filteredQuestions = questions.filter(function(question) {
+	// 	return !(!diaper[questionId] || question.view !== view);
+	// })
+
 	questions.forEach(function(question){
 		let questionId = question.id;
-		if (!diaper[questionId]) {
+		if (!diaper[questionId]) {  // TODO: diapers have questions?
 			return
 		};
 		if (question.view !== view) {
@@ -81,6 +87,7 @@ function createFormQuestions () {
 }
 
 function createDependentQuestions (question, questions, questionId, collapse) {
+	// TODO: redundant questionId argument - id is already present in 'question'
 	Array.from(question['dependent-questions']).forEach(function(depQuestion){
 		let depQuestionId = depQuestion.id
 		console.log('depQuestionId', depQuestionId)
@@ -115,13 +122,11 @@ function createCheckboxInput (questionId) {
 	let data = {};
 	let diaper = state.item.categoryData;
 	let questions = state.formCategories['questions-text']
-	let questionText;
 	Array.from(questions).forEach(function(question){
 		if (question['question-id'] == questionId) {
 			Array.from(question.options).forEach(function(option){
 				if (option.name == diaper[questionId]['answer-options']) {
-					questionText = option.text;
-					data['text'] = questionText
+					data['text'] = option.text
 					data['question-id'] = questionId;					
 				}
 			})
@@ -161,6 +166,7 @@ function createSelectInput (questionId) {
 function saveAnswers () {
 	let checkboxes = document.getElementsByClassName('form-input checkbox');
 	Array.from(checkboxes).forEach(function(checkbox){
+		// TODO: simplify below - no if needed
 		if (checkbox.checked == true) {
 			state.item.answers[checkbox.id] = true;
 		} else {
@@ -170,6 +176,7 @@ function saveAnswers () {
 
 	let selects = $('.form-input .select');
 	Array.from(selects).forEach(function(select){
+		// TODO: replace forEach below with Array.prototype.find()
 		Array.from(state.formCategories.categories).forEach(function(formCategory){
 			if (formCategory.id == select.id) {
 				let parentId = formCategory['parent-id'];
@@ -243,12 +250,11 @@ function createFormNavigation () {
 // 	createTemplate ('button-template', 'structure');
 // }
 
-function getDiaperCategories (data) {
-	let diaperCategories;
+function getDiaperCategories (data) {  // TODO: what data?
+	// TODO: replace with Array.prototype.find()    (find on MDN)
 	for (let i=0; i<data.length; i++) {
 		if (data[i].id == 'diaper-categories') {
-			diaperCategories = data[i];
-			return diaperCategories
+			return data[i];
 		}
 	}
 }
@@ -279,6 +285,7 @@ let navItems = {
 }
 
 function getViews () {
+	// TODO: replace with Array.prototype.map()
 	let formViews = [];
 	Array.from(navItems.items).forEach(function(navItem){
 		formViews.push(navItem.id)
@@ -288,10 +295,11 @@ function getViews () {
 
 // let views = ['structure', 'fabrics', 'dimensions', 'others', 'description'];
 
-function findCategoryData (categories) {
+function findCategoryData (categories) {  // TODO: what data?
 	let chosenCategory;
+	// TODO: replace with find ()
 	Array.from(categories).forEach(function(category){
-		if (category.id == 'diaper-categories') {
+		if (category.id == 'diaper-categories') {   // TODO: categories in categories?
 			category.data.forEach(function(cat){
 				if (cat.name == state.item.category) {
 					chosenCategory = cat
