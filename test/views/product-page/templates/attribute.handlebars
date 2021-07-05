@@ -1,0 +1,24 @@
+{{#each parameters}}
+<div class="row parameters-row">
+  <div class="attribute-title col-6">
+    {{title}}
+  </div>
+  <div class="attribute-value col-6 align-self-end">
+    <div>
+      {{#if tick}}
+      <img class="tick-image" src="{{src}}" />
+      {{else}}
+        {{#if values}}
+          {{#each values}}
+            <div>
+              {{value}}
+            </div>
+          {{/each}}
+        {{else}}
+          {{value}}
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</div>
+{{/each}}

@@ -1,0 +1,7 @@
+  {{#with image}}
+  <div class="col-4 p-0" type="button">
+    <div class="embed-responsive embed-responsive-1by1">
+    <img {{#if profile}} id="{{id}}" {{/if}} class="small-image pattern-profile-image mx-auto img-fluid img-thumbnail embed-responsive-item pielucha-image" src={{url}} pattern-nr="{{pattern-nr}}" image-nr="{{image-nr}}" />
+    </div>
+  </div>
+  {{/with}}

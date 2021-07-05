@@ -1,0 +1,6 @@
+{{#with input-data}}
+<div class="form-group">
+  <label for="{{id}}-input">{{title}}</label>
+  <textarea id="{{id}}-input" type="text" rows="{{rows-nr}}" class="form-control {{input-name}} text-input" {{#if required}} required {{/if}} ></textarea>
+</div>
+{{/with}}

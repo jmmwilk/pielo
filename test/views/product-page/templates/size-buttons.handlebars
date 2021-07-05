@@ -1,0 +1,7 @@
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+{{#each diaper.sizes}}
+<label class="btn btn-outline-secondary">
+  <input type="radio" name="options" id="{{this.shortcut}}-{{../container}}-button" class="{{../container}}-size-button" size="{{id}}" autocomplete="off"> {{this.shortcut}}
+</label>
+{{/each}}
+</div>

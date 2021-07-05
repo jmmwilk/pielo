@@ -1,0 +1,40 @@
+<form id="subscribe-box" class="form mx-auto mt-5 needs-validation" novalidate>
+  <div class="mb-2 text-warning">
+    Zarejestruj sie.
+  </div>
+  <div id="email-box" class="form-group">
+    <label for="email">Email</label>
+    <input id="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" required>
+    <div id="invalid-feedback-email" class="invalid-feedback">
+      Wpisz poprawny adres email.
+    </div>  </div>
+  <div id="password-box" class="form-group">
+    <label for="password1">Podaj Hasło</label>
+    <input id="password1" type="password" class="form-control" placeholder="Podaj Hasło" required>
+    <div id="invalid-feedback-password1" class="invalid-feedback">
+    </div>
+    <div id="valid-feedback-password1" class="valid-feedback">
+      ok
+    </div>
+  </div>
+  <div id="repeat-password-box" class="form-group">
+    <label for="password2">Powtórz Hasło</label>
+    <input id="password2" type="password" class="form-control" placeholder="Powtórz Hasło" required>
+    <div id="invalid-feedback-password2" class="invalid-feedback">
+    </div>
+    <div id="valid-feedback-password2" class="valid-feedback">
+      ok
+    </div>
+  </div>
+  <div class="form-group">
+    <div id="role-checkbox" class="form-check">
+      <input data-toggle="collapse" data-target='#name-box' class="form-check-input" type="checkbox" id="producer">
+      <label class="form-check-label" for="producer">Jestem producentem</label>
+    </div>
+  </div>
+  <div id="name-box" class="form-group">
+    <label for="name">Nazwa Producenta</label>
+    <input id="name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Nazwa Producenta">
+  </div>
+  <button id="sign-up" type="submit" class="btn btn-primary mt-2">Zarejestruj</button>
+</form>

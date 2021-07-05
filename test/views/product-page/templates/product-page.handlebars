@@ -1,0 +1,72 @@
+{{#with diaper}}
+<div id="main" class="col-md-12 order-1 mx-auto">
+  <div id="product-page" class="col-md-10 d-flex flex-column order-1 mx-auto">
+    <div class="main-info-box row my-2 p-3 mx-1 bg-white border">
+      <div class="col-2 pr-0 pl-1">
+        <div class="row justify-content-center">
+          <div id="images-left-box" class="col-10 d-flex flex-column">
+          </div>
+        </div>
+      </div>
+      <div id="profile-image-box" class="col-md-6">
+      </div>
+      <div class="title-box col">
+        <div id="edit-diaper-wrapper">
+        </div>
+        <h4 class="text-primary mb-3"> {{printnewinfo this}} </h4>
+        <div class="d-flex flex-row mb-3">
+          <h5 class="text-secondary mr-2">od</h5>
+          <h5 href="#application" class="text-warning" type="button">{{producer-name}}</h5>
+        </div>
+        <div id="stars-box-wrapper" class="mb-3">
+        </div>
+        <div class="text-secondary mb-3">
+          <h5 class="mb-0">Rozmiary</h5>
+          <div class="d-flex flex-column mt-1">
+            <div id="size-buttons-container">
+            </div>
+            <div id="size-description" class="d-flex flex-row mt-2">
+            </div>
+          </div>
+        </div>
+        <div class="text-secondary">
+          <div class="row">
+            <div class="col-auto">
+              <h5 class="mb-0">Wzór:</h5>
+            </div>
+            <div id="pattern-name" class="col-auto text-primary">
+            </div>
+          </div>
+          <div id="patterns-images-box" class="d-flex flex-row flex-wrap row">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-box my-2">
+      <div class="card card-body">
+        <div id="info-title" class="text-center" type="button" aria-expanded="false" aria-controls="parameters-wrapper" data-toggle="collapse" href="#parameters-wrapper">
+          <h5 class="card-title text-primary">
+            Informacje od producenta
+          </h5>
+        </div>
+        <div class="collapse text-secondary mx-3" id="parameters-wrapper">
+          <div id="parameters" class="mb-3">
+          </div>
+          <div id="description" class="">
+            <div class="row">
+              <div class="col-12">
+                <div class="parameters-group-title text-primary">
+                  <h6>Opis</h6>
+                </div>
+                <div class="white-space-preline">
+                  <p>{{description}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/with}}

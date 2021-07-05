@@ -1,0 +1,11 @@
+{{#each fabrics}}
+<div class="input-group mb-3 row">
+  <div class="col-3">
+    <label for="{{name}}-input class="">{{name}}</label>
+  </div>
+  <input id="{{name}}-input" name="{{name}}" type="text" aria-describedby="{{name}}-addon" class="{{layer-id}} form-control col-3" layer-id="{{layer-id}}">
+  <div class="input-group-append">
+    <span class="input-group-text" id="{{name}}-addon">%</span>
+  </div>
+</div>
+{{/each}}

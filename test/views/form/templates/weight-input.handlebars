@@ -1,0 +1,25 @@
+<div id="weight-inputs">
+  <div id="weight-inputs-title" class="d-flex flex-column">
+  </div>
+  {{#each sizes}}
+  <div class="row">
+    <div class="col-2 font-weight-bold">
+      {{shortcut}}
+    </div>
+    <div class="input-group mb-2 col-5">
+      <label for="{{id}}-from-weight-input" class="px-2">od</label>
+      <input id="{{id}}-from-weight-input" type="text" aria-describedby="{{id}}-from-addon" class="form-control weight-input-from weight-input" size="{{id}}" >
+      <div class="input-group-append">
+        <span class="input-group-text" id="{{id}}-from-addon">kg</span>
+      </div>
+    </div>
+    <div class="input-group mb-2 col-5">
+      <label for="{{id}}-till-weight-input" class="px-2">do</label>
+      <input id="{{id}}-till-weight-input" type="text" aria-describedby="{{id}}-till-addon" class="form-control weight-input-till weight-input" size="{{id}}" >
+      <div class="input-group-append">
+        <span class="input-group-text" id="{{id}}-till-addon">kg</span>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

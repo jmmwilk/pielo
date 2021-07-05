@@ -1,0 +1,26 @@
+{
+  "name": "pielo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmmwilk/pielo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmmwilk/pielo/issues"
+  },
+  "homepage": "https://github.com/jmmwilk/pielo#readme"
+}

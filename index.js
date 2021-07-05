@@ -1,170 +1,80 @@
-import * as menu from '../mocks/menu.js';
-import * as productslist from '../views/productslist.js';
-import * as sidebarmenu from '../views/sidebarmenu.js';
-import * as form from '../views/new-form.js';
-import * as login from '../views/login.js';
-import * as eventBus from '../eventBus.js';
-import * as state from '../state.js';
-import * as newsletterPage from '../views/newsletter-page.js';
 
 $(document).ready(function(){
-	// let dbRef = firebase.database().ref('form-categories/');
-	// let newDbRef = dbRef.push();
-	// newDbRef.set({
-	//   'id': 'flaps-fabrics',
-	//   'input-type': 'select',
-	//   'name': 'Zakładki- materały',
-	//   'question-type': 'dependent',
-	//   'view': 'fabrics',
-	// });
-
-	// let dbRef = firebase.database().ref('form-questions-text/');
-	// let newDbRef = dbRef.push();
-	// newDbRef.set({
-	//   'question-id': 'flaps-fabrisc',
-	//   'for-multiple-questions': false,
-	//   'options': [
-	//   		{	
-	//   		'name': 'all-fabrics',
-	//   		'text': 'Zakładki- materiały'
-	//   		},
-	//   	]
-	// });
-	
-	// let dbRef = firebase.database().ref('form-answers/');
-	// let newDbRef = dbRef.push();
-	// newDbRef.set({
-	//   'id': 'fabrics-all',
-	//   'for-multiple-questions': false,
-	//   'options': [
-	//   		{	
-	//   		'name': 'bawełna',
-	//   		},
-	//   		{	
-	//   		'name': 'bambus',
-	//   		},
-	//   		{	
-	//   		'name': 'leonardo',
-	//   		},
-	//   	]
-	// });
-
-	createTemplate ('application-template', 'application');
-	const promise = getCategories ();
-	promise.
-	then(function(data) {
-		const promise2 = getCategoriesData (data);
-		promise2.
-		then(function(categoriesData) {
-			createStartPage (categoriesData);
-			enableHomeClick (categoriesData);
-			login.goToLoginScreen (categoriesData);
-			enableButton (categoriesData);
-			eventBus.eventBus.subscribe('userLoggedIn', fillUserName);
-		});
-	});
+	createNewsletterTemplate ();
+	enableSubmitClick ();
 })
 
-export function createTemplate (templateId, parentTemplate) {
-	let template = $('#' + templateId).html();
+function createNewsletterTemplate () {
+	let template = $('#newsletter-page-template').html();
 	let compiledTemplate = Handlebars.compile(template);
-	$('#' + parentTemplate).html(compiledTemplate());
+	$('#application').html(compiledTemplate());
 }
 
-// function createApplicationTemplate () {
-// 	let template = $('#application-template').html();
-// 	let compiledTemplate = Handlebars.compile(template);
-// 	$('#application').html(compiledTemplate());
-// }
+function enableSubmitClick () {
+    let forms = document.getElementsByClassName('needs-validation');
+    let validation = Array.prototype.filter.call(forms, function(form) {
+    	let button = document.getElementById('button');
+		button.onclick = function () {
+			form.addEventListener('submit', function(event) {
+	        if (form.checkValidity() === false) {
+	          event.preventDefault();
+	          event.stopPropagation();
+	        }
+	        form.classList.add('was-validated');
+	        event.preventDefault();
+	        savePersonalData ();
+	        form.innerHTML = '';
+	        document.getElementById('welcome-text').innerHTML = '';
+	        document.getElementById('thank-you-text').classList.remove('d-none')
 
-function fillUserName () {
-	let userNameBox = document.getElementById('user-name-box');
- 	userNameBox.innerText = state.state.user.email
-}
-
-export function createStartPage (categoriesData) {
-	sidebarmenu.createSideBar (categoriesData);
-	productslist.createProductsList ();
-}
-
-function enableButton (categoriesData) {
-	let button = document.getElementById('add-diaper');
-	button.onclick = function() {
-		clearPage ();
-		form.createForm (categoriesData);
-	}
-}
-
-function enableHomeClick (categoriesData) {
-	let home = document.getElementById('home');
-	home.onclick = function () {
-		clearPage ();
-		createStartPage (categoriesData);
-	}
-}
-
-function clearPage () {
-	let page = document.getElementById('page');
-	page.innerHTML = '';
-}
-
-export function getCategories () {
-	const promise1 = new Promise ((resolve, reject) => {
-		let dbRef = firebase.database().ref('categories/');
-		let data = [];
-		dbRef.once('value',   function(snapshot) {
-		    snapshot.forEach(function(childSnapshot) {
-		      var childData = childSnapshot.val();
-		      data.push(childData);
-		    });
-		    resolve (data)
-	  	});
-	  	
+      	}, false);
+	 	}
 	});
-	return promise1
 }
 
-export function getCategoriesData (data) {
-	// let categoriesNames = [];
-	// Array.from(data).forEach(function(data){
-	//     let categoryName = data.id;
-	//     categoriesNames.push(categoryName);
-	// });
-	let categories = data;
-	let categoriesData = [];
-	let count = 0;
-	const promise = new Promise ((resolve, reject) => {
-		Array.from(categories).forEach(function(category){
-		    let dbRef = firebase.database().ref(category.id + '/');
-		    let categoryData = [];
-		    dbRef.once('value',   function(snapshot) {
-			    snapshot.forEach(function(childSnapshot) {
-			      var childData = childSnapshot.val();
-			      categoryData.push(childData);
-			    });
-//			    console.log(JSON.stringify(count));
-			    count = count + 1;
-//			    console.log(JSON.stringify(categoryName));
-//			    console.log(JSON.stringify(categoryData));
-
-				let object = {};
-				object.data = categoryData;
-				object.name = category.name;
-				object['menu-name'] = category['menu-name'];
-				object.id = category.id;
-				object.issubmenu = category.issubmenu;
-
-
-			    categoriesData.push(object);
-				// category.categoryData = categoryData;
-				// category.name = categoryName;
-
-			    if (count == categories.length) {
-			    	resolve (categoriesData)
-			    }
-		  	});
-		})
-	});
-	return promise
+function createThankYouTemplate () {
+	let template = $('#thank-you-template').html();
+	let compiledTemplate = Handlebars.compile(template);
+	$()
 }
+
+function savePersonalData () {
+	var forms = document.getElementsByClassName('needs-validation');
+	Array.from(forms).forEach(function(form){
+		if (form.classList.contains('was-validated') == true) {
+			const emailInput = document.getElementById('email-input');
+			const nameInput = document.getElementById('name-input');
+			const nappiesUserInput = document.getElementById('nappies-user-checkbox');
+			const producerInput = document.getElementById('producer-checkbox');
+			const shopOwnerInput = document.getElementById('shop-owner-checkbox')
+			let email = emailInput.value;
+			let name = nameInput.value;
+			let nappiesUser = false;
+			let producer = false;
+			let shopOwner = false;
+			if (nappiesUserInput.checked == true) {
+				nappiesUser = true;
+			};
+			if (producerInput.checked == true) {
+				producer = true;
+			};
+			if (shopOwnerInput.checked == true) {
+				shopOwner = true;
+			};
+			let dbRef = firebase.database().ref('newsletter/');
+			var newDbRef = dbRef.push();
+			newDbRef.set({
+			  	'email': email,
+				'name': name,
+				'nappiesUser': nappiesUser,
+				'producer': producer,
+				'shopOwner': shopOwner
+			});
+		}
+	})
+}
+
+
+
+
 

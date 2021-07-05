@@ -1,0 +1,14 @@
+<li class="nav-item">
+  <a id="{{id}}" class="nav-link collapsed text-truncate" href="#{{id}}-submenu" data-toggle="collapse" data-target="#{{id}}-submenu">
+  {{menu-name}}
+  </a>
+  <ul id="{{id}}-submenu" class="collapse flex-column pl-2 nav" aria-expanded="false">
+    {{#each data}}
+    <li class="nav-item">
+      <a id="{{id}}" class="menu-item nav-link" data-categorygroup="{{../id}}" data-category="{{id}}" type="button">
+      {{this.name}}
+      </a>
+    </li>
+    {{/each}}
+  </ul>
+</li>

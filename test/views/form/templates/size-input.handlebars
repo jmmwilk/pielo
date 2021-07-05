@@ -1,0 +1,8 @@
+{{#each dimensions}}
+<div class="input-group mb-2">
+  <input type="text" aria-describedby="{{dimension}}-{{../size.id}}-addon" class="form-control dimension-input {{id}} {{../size.id}}" size="{{../size.id}}" dimension-id="{{id}}" >
+  <div class="input-group-append">
+    <span class="input-group-text" id="{{dimension}}-{{../size.id}}-addon">cm</span>
+  </div>
+</div>
+{{/each}}

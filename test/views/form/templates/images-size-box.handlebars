@@ -1,0 +1,23 @@
+<div size="{{size-id}}" class="images-size-box border mb-3" pattern="{{pattern-number}}">
+  <div class="ml-2 mt-2" required>
+    {{size-name}}
+  </div>
+  {{#each image-numbers}}
+    <div class="form-group m-3 p-2">
+      {{#if profile-image}}
+        <label for="pattern-{{../pattern-number}}-size-{{../size-id}}-image-{{image-number}}">Zdjęcie profilowe pieluszki:</label>
+      {{/if}}
+      <div class="d-flex flex-row">
+        <button type="button" class="btn btn-outline-danger btn-sm remove-image-button mr-2" pattern-nr="{{../pattern-number}}" image-nr="{{image-number}}" size-id="{{../size-id}}" >
+          X
+        </button>
+        <input type="file" class="form-control-file image-input pattern-{{../pattern-number}}" id="pattern-{{../pattern-number}}-size-{{../size-id}}-image-{{image-number}}" pattern-number="{{../pattern-number}}" image-number="{{image-number}}" size-id="{{../size-id}}" {{#if profile-image}} required {{/if}} >
+        <div class="invalid-feedback">
+          Dodaj zdjęcie.
+        </div>
+      </div>
+      <div id="file-preview-pattern-{{../pattern-number}}-size-{{../size-id}}-image-{{image-number}}" class="preview-image-box" pattern-nr="{{../pattern-number}}" image-nr="{{image-number}}" size-id="{{../size-id}}">
+      </div>
+    </div>
+  {{/each}}
+</div>
